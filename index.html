@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ton Cüzdan Bağlantısı ve Ödeme</title>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+</head>
+<body>
+    <h1>Ton Cüzdan Bağlantısı ve Airdrop Kaydı</h1>
+    <div id="ton-connect"></div>
+
+    <script>
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://your-app-url.com/tonconnect-manifest.json',
+            buttonRootId: 'ton-connect'
+        });
+
+        tonConnectUI.connectWallet().then(wallet => {
+            console.log(wallet);
+        });
+    </script>
+</body>
+</html>
