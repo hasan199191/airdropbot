@@ -1,42 +1,16 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airdrop Talep Et</title>
-    <script src="https://cdn.jsdelivr.net/npm/tonweb@latest"></script> <!-- TONWeb SDK -->
+    <title>TON Airdrop Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
 </head>
 <body>
-    <h1>Airdrop Talep Et</h1>
-    <button id="airdropBtn">Airdrop Talep Et</button>
-
-    <script>
-        document.getElementById('airdropBtn').onclick = function() {
-            // Cüzdan bağlantısı başlatılır
-            connectWallet();
-        };
-
-        async function connectWallet() {
-            try {
-                const tonweb = new TonWeb();  // TONWeb SDK kullanarak cüzdan bağlantısı başlatılacak
-                const wallet = await tonweb.wallet.create({ publicKey: 'cüzdan_public_key' });
-                console.log("Cüzdan Bağlantısı Başarılı:", wallet);
-                await requestPayment(wallet);
-            } catch (error) {
-                console.error("Cüzdan Bağlantısında Hata:", error);
-            }
-        }
-
-        async function requestPayment(wallet) {
-            const paymentAmount = 0.25;  // Gönderilecek TON miktarı
-            const receiverAddress = "alici_cuzdan_adresi";  // Ödeme yapılacak cüzdan adresi
-
-            const transfer = await wallet.transfer({
-                to: receiverAddress,
-                value: paymentAmount
-            });
-            console.log("Ödeme Başarıyla Gönderildi", transfer);
-        }
-    </script>
+    <div id="main">
+        <button id="airdropButton">Airdrop Talep Et</button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
